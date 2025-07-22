@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Super Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function toggleMenu(id) {
+      const menu = document.getElementById(id);
+      menu.classList.toggle('hidden');
+    }
+  </script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-blue-800 text-white px-6 py-4 flex justify-between items-center shadow">
+    <h1 class="text-xl md:text-2xl font-bold">Donasi Buku Lumajang</h1>
+    <div>
+      <span class="mr-4">Super Admin</span>
+      <a href="/logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <!-- Sidebar Super Admin -->
+<div class="space-y-1">
+  <button onclick="toggleMenu('menu-perpus')" class="w-full text-left px-4 py-2 rounded hover:bg-blue-600">Manajemen Perpustakaan</button>
+  <div id="menu-perpus" class="ml-4 mt-1 hidden">
+    <div class="bg-gray-800 rounded-lg p-2 space-y-1 shadow-inner">
+      <a href="{{ url_for('daftar_perpustakaan') }}" class="block px-4 py-1 rounded hover:bg-blue-500">Daftar Perpustakaan</a>
+      <a href="/superadmin/tambah_perpus" class="block px-4 py-1 rounded hover:bg-blue-500">Tambah Perpustakaan</a>
+      <a href="{{ url_for('verifikasi_admin') }}" class="block px-3 py-1 rounded hover:bg-blue-500">Verifikasi Admin</a>
+    </div>
+  </div>
+</div>
+
+      <!-- Dropdowns -->
+<div class="space-y-1">
+  <button onclick="toggleMenu('menu-perpus')" class="w-full text-left px-4 py-2 rounded hover:bg-blue-600">Manajemen Perpustakaan</button>
+  <div id="menu-perpus" class="ml-4 mt-1 hidden">
+    <div class="bg-gray-800 rounded-lg p-2 space-y-1 shadow-inner">
+      <a href="{{ url_for('tambah_perpus') }}" class="block px-4 py-1 rounded hover:bg-blue-500">Tambah Perpustakaan</a>
+      <a href="{{ url_for('daftar_perpustakaan') }}" class="block px-4 py-2 hover:bg-blue-100 rounded">Daftar Perpustakaan</a>
+      <a href="{{ url_for('verifikasi-admin') }}" class="block px-4 py-1 rounded hover:bg-blue-500">Verifikasi Admin</a>
+    </div>
+  </div>
+</div>
+
+<!-- Manajemen Donatur -->
+<div class="space-y-1">
+  <button onclick="toggleMenu('menu-donatur')" class="w-full text-left px-4 py-2 rounded hover:bg-blue-600">Manajemen Donatur</button>
+  <div id="menu-donatur" class="ml-4 mt-1 hidden">
+    <div class="bg-gray-800 rounded-lg p-2 space-y-1 shadow-inner">
+      <a href="/superadmin/donatur" class="block px-4 py-1 rounded hover:bg-blue-500">Daftar Donatur</a>
+      <a href="/superadmin/donasi" class="block px-4 py-1 rounded hover:bg-blue-500">Riwayat Donasi</a>
+    </div>
+  </div>
+</div>
+
+<!-- Distribusi -->
+<div class="space-y-1">
+  <button onclick="toggleMenu('menu-distribusi')" class="w-full text-left px-4 py-2 rounded hover:bg-blue-600">Distribusi & Konfirmasi</button>
+  <div id="menu-distribusi" class="ml-4 mt-1 hidden">
+    <div class="bg-gray-800 rounded-lg p-2 space-y-1 shadow-inner">
+      <a href="/superadmin/konfirmasi-distribusi" class="block px-4 py-1 rounded hover:bg-blue-500">Konfirmasi Resi</a>
+      <a href="/superadmin/riwayat-distribusi" class="block px-4 py-1 rounded hover:bg-blue-500">Riwayat Distribusi</a>
+    </div>
+  </div>
+</div>
+
+<!-- Kategori Buku -->
+<div class="space-y-1">
+  <button onclick="toggleMenu('menu-kategori')" class="w-full text-left px-4 py-2 rounded hover:bg-blue-600">Kategori Buku</button>
+  <div id="menu-kategori" class="ml-4 mt-1 hidden">
+    <div class="bg-gray-800 rounded-lg p-2 space-y-1 shadow-inner">
+      <a href="/superadmin/tambah-subjek" class="block px-4 py-1 rounded hover:bg-blue-500">Tambah Subjek</a>
+      <a href="/superadmin/kelola-subjek" class="block px-4 py-1 rounded hover:bg-blue-500">Kelola Subjek</a>
+    </div>
+  </div>
+</div>
+      <a href="/superadmin/statistik" class="block px-4 py-2 rounded hover:bg-blue-600">Statistik & Laporan</a>
+      <a href="/superadmin/pengaturan" class="block px-4 py-2 rounded hover:bg-blue-500">Pengaturan Website</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ml-72 pt-24 px-10 pb-10 bg-gray-50 min-h-screen">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Selamat Datang, Super Admin!</h2>
+
+    <!-- Statistik -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white p-6 rounded shadow text-center">
+        <h3 class="text-sm text-gray-500 uppercase">Total Donatur</h3>
+        <p class="text-3xl font-bold text-blue-700 mt-2">{{ total_donatur or '-' }}</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow text-center">
+        <h3 class="text-sm text-gray-500 uppercase">Total Buku Didonasikan</h3>
+        <p class="text-3xl font-bold text-green-600 mt-2">{{ total_buku or '-' }}</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow text-center">
+        <h3 class="text-sm text-gray-500 uppercase">Perpustakaan Desa</h3>
+        <p class="text-3xl font-bold text-yellow-600 mt-2">{{ total_perpus or '-' }}</p>
+      </div>
+    </div>
+
+    <!-- Permintaan & Donasi -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+      <div class="bg-white p-6 rounded shadow">
+        <h3 class="text-lg font-semibold mb-4">Permintaan Buku Mendesak</h3>
+        {% if permintaan_list %}
+          <ul class="space-y-2 text-sm">
+            {% for item in permintaan_list %}
+              <li class="flex justify-between border-b pb-2">
+                <span>{{ item.perpustakaan.nama }}</span>
+                <span class="text-red-500 font-semibold">Dibutuhkan: {{ item.jumlah }} {{ item.subjek }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="text-right mt-3">
+            <a href="/superadmin/permintaan-buku" class="text-blue-500 hover:underline text-sm">Lihat semua →</a>
+          </div>
+        {% else %}
+          <p class="text-gray-500">Belum ada permintaan.</p>
+        {% endif %}
+      </div>
+
+      <div class="bg-white p-6 rounded shadow">
+        <h3 class="text-lg font-semibold mb-4">Transparansi Donasi Terbaru</h3>
+        {% if riwayat_donasi %}
+          <ul class="space-y-2 text-sm">
+            {% for donasi in riwayat_donasi %}
+              <li class="flex justify-between border-b pb-2">
+                <span>{{ donasi.donatur['full_name'] }}</span>
+                <span class="text-blue-600 font-semibold">{{ donasi.jumlah }} buku {{ donasi.subjek }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="text-right mt-3">
+            <a href="/superadmin/transparansi" class="text-blue-500 hover:underline text-sm">Lihat semua →</a>
+          </div>
+        {% else %}
+          <p class="text-gray-500">Belum ada donasi.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Tindakan Cepat -->
+    <div class="bg-white p-6 rounded shadow mb-10">
+      <h3 class="text-lg font-semibold mb-4">Tindakan Cepat</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a href="/superadmin/konfirmasi-distribusi" class="bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded">Konfirmasi Bukti Donasi</a>
+        <a href="/superadmin/perpusdes" class="bg-green-600 hover:bg-green-700 text-white text-center py-3 rounded">Kelola Perpustakaan</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-400 text-sm">
+      © {{ current_year }} Donasi Buku Lumajang — Dinas Kearsipan dan Perpustakaan Kabupaten Lumajang
+    </footer>
+  </main>
+
+  <!-- Tutup dropdown -->
+  <script>
+    document.addEventListener("click", function(e) {
+      if (!e.target.closest("button") && !e.target.closest("div[id^='menu-']")) {
+        document.querySelectorAll("div[id^='menu-']").forEach(menu => {
+          menu.classList.add("hidden");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
